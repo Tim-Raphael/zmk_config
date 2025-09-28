@@ -1,0 +1,206 @@
+//
+//                                                        ▀▀▀▀▀     ▀▀▀▀▀          ▀▀█▀▀
+//                                                        ▄▀▀▀▄  ▄  ▄▀▀▀▄  ▄  ▄▀▀▀▄  █  ▄▀▀▀▄
+//                                                        █   █  █  █   █  █  █   █  █  █   █
+//                                                         ▀▀▀   █   ▀▀▀   █   ▀▀▀   ▀   ▀▀▀
+//                                                               █      ▄▄▄█▄▄▄    █   █  
+//                                                               ▀      █  █  █     █▄█
+//                                                             ▀▀▀▀▀    █  █  █      ▀
+//                                                                      ▀  ▀  ▀
+//
+// ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/ext_power.h>
+
+#define BASE        0
+#define SYM         1
+#define NAV         2  
+#define NUM         3
+#define UMLAUTS     4
+#define UTIL        5
+
+&mt {
+    quick-tap-ms = <100>;
+    global-quick-tap;
+    flavor = "tap-preferred";
+    tapping-term-ms = <180>;
+};
+
+&lt {
+    tapping-term-ms = <200>;
+    flavor = "balanced";
+    quick-tap-ms = <150>;
+};
+
+/ {
+    behaviors {
+        hm: homerow_mods {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOMEROW_MODS";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <125>;
+            global-quick-tap;
+            bindings = <&kp>, <&kp>;
+        };
+        
+        // Custom behavior for Escape/Umlauts layer
+        esc_uml: escape_umlauts {
+            compatible = "zmk,behavior-hold-tap";
+            label = "ESC_UMLAUTS";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <125>;
+            global-quick-tap;
+            bindings = <&mo>, <&kp>;
+        };
+        
+        // Custom behavior for Shift/Umlauts caps
+        sft_umlcap: shift_umlauts_cap {
+            compatible = "zmk,behavior-hold-tap";
+            label = "SFT_UMLCAP";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <125>;
+            global-quick-tap;
+            bindings = <&kp>, <&kp>;
+        };
+    };
+
+    // German Umlauts using Unicode (requires OS-level unicode input method)
+    macros {
+        ae_macro: ae_macro {
+            label = "ae_umlaut";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp RA(A)>; // Alt+A for ä (depends on OS layout)
+        };
+        
+        oe_macro: oe_macro {
+            label = "oe_umlaut";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp RA(O)>; // Alt+O for ö
+        };
+        
+        ue_macro: ue_macro {
+            label = "ue_umlaut";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp RA(U)>; // Alt+U for ü
+        };
+        
+        ss_macro: ss_macro {
+            label = "sharp_s";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp RA(S)>; // Alt+S for ß
+        };
+
+        ae_cap_macro: ae_cap_macro {
+            label = "ae_cap_umlaut";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp RA(LS(A))>; // Alt+Shift+A for Ä
+        };
+        
+        oe_cap_macro: oe_cap_macro {
+            label = "oe_cap_umlaut";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp RA(LS(O))>; // Alt+Shift+O for Ö
+        };
+        
+        ue_cap_macro: ue_cap_macro {
+            label = "ue_cap_umlaut";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp RA(LS(U))>; // Alt+Shift+U for Ü
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        base_layer {
+            label = "Base";
+            bindings = <
+                        &kp Q        &kp W       &kp E         &kp R         &kp T                          &kp Y        &kp U          &kp I       &kp O       &kp P
+                        &hm LGUI A   &hm LALT S  &hm LCTRL D   &hm LSHIFT F  &kp G                          &kp H        &hm RSHIFT J   &hm RCTRL K &hm RALT L  &hm RGUI SEMICOLON
+            &kp NUBS    &kp Z        &lt NUM X   &lt NAV C     &lt SYM V     &kp B                          &lt SYM N    &lt NAV M      &lt NUM COMMA &kp DOT   &kp SLASH   &kp APOSTROPHE
+                                                  &kp LCTRL     &kp TAB       &esc_uml UMLAUTS ESCAPE        &kp SPACE    &kp RET        &kp BSPC
+            >;
+        };
+
+        symbol_layer {
+            label = "Symbols";
+            bindings = <
+                        &kp EXCL     &kp AT      &kp HASH      &kp DOLLAR    &kp PERCENT                    &kp CARET    &kp AMPERSAND  &kp ASTERISK &kp DQT     &kp APOSTROPHE
+                        &kp LT       &kp LBRC    &kp LPAR      &kp LBKT      &kp PIPE                       &kp UNDER    &kp RBKT       &kp RPAR     &kp RBRC    &kp GT
+            &trans      &kp GRAVE    &kp TILDE   &kp BACKSLASH &trans        &trans                         &kp MINUS    &kp PLUS       &kp ASTERISK &kp EQUAL   &trans      &trans
+                                                  &trans        &trans        &trans                         &trans       &trans         &trans
+            >;
+        };
+
+        nav_layer {
+            label = "Navigation";
+            bindings = <
+                        &kp F1       &kp F2      &kp F3        &kp F4        &trans                         &trans       &kp PG_DN      &kp PG_UP    &trans      &trans
+                        &hm LGUI F5  &hm LALT F6 &hm LCTRL F7  &hm LSHIFT F8 &trans                         &kp LEFT     &hm RSHIFT DOWN &hm RCTRL UP &hm RALT RIGHT &hm RGUI RET
+            &trans      &kp F9       &kp F10     &kp F11       &kp F12       &trans                         &kp BSPC     &trans         &trans       &kp DEL     &trans      &trans
+                                                  &trans        &trans        &trans                         &trans       &trans         &trans
+            >;
+        };
+
+        num_layer {
+            label = "Numbers";
+            bindings = <
+                        &trans       &trans      &trans        &trans        &trans                         &kp EQUAL    &kp N7         &kp N8       &kp N9      &kp ASTERISK
+                        &trans       &trans      &trans        &trans        &trans                         &kp PLUS     &hm RSHIFT N4  &hm RCTRL N5 &hm RALT N6 &hm RGUI N0
+            &trans      &trans       &trans      &trans        &trans        &trans                         &kp MINUS    &kp N1         &kp N2       &kp N3      &kp SLASH   &trans
+                                                  &trans        &trans        &trans                         &trans       &trans         &trans
+            >;
+        };
+
+        umlauts_layer {
+            label = "Umlauts";
+            bindings = <
+                        &trans       &trans      &trans        &trans        &trans                         &trans       &ue_macro      &trans       &oe_macro   &trans
+                        &ae_macro    &ss_macro   &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans
+            &sft_umlcap LSHIFT MINUS &trans      &trans        &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans      &trans
+                                                  &trans        &trans        &trans                         &trans       &trans         &trans
+            >;
+        };
+
+        util_layer {
+            label = "Utilities";
+            bindings = <
+                        &bt BT_CLR   &bootloader &trans        &trans        &trans                         &trans       &trans         &trans       &bootloader &trans
+                        &trans       &trans      &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans
+            &trans      &trans       &trans      &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans      &trans
+                                                  &trans        &trans        &trans                         &trans       &trans         &trans
+            >;
+        };
+    };
+};
