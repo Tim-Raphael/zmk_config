@@ -61,82 +61,71 @@
             bindings = <&mo>, <&kp>;
         };
         
-        // Custom behavior for Shift/Umlauts caps
-        sft_umlcap: shift_umlauts_cap {
-            compatible = "zmk,behavior-hold-tap";
-            label = "SFT_UMLCAP";
-            #binding-cells = <2>;
-            flavor = "tap-preferred";
-            tapping-term-ms = <200>;
-            quick-tap-ms = <125>;
-            global-quick-tap;
-            bindings = <&kp>, <&kp>;
-        };
-    };
-
-    // German Umlauts using Unicode (requires OS-level unicode input method)
-    macros {
-        ae_macro: ae_macro {
-            label = "ae_umlaut";
+        ae: ae_umlaut {
             compatible = "zmk,behavior-macro";
+            label = "IBUS_AE";
             #binding-cells = <0>;
-            wait-ms = <10>;
-            tap-ms = <10>;
-            bindings = <&kp RA(A)>; // Alt+A for ä (depends on OS layout)
-        };
-        
-        oe_macro: oe_macro {
-            label = "oe_umlaut";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <10>;
-            tap-ms = <10>;
-            bindings = <&kp RA(O)>; // Alt+O for ö
-        };
-        
-        ue_macro: ue_macro {
-            label = "ue_umlaut";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <10>;
-            tap-ms = <10>;
-            bindings = <&kp RA(U)>; // Alt+U for ü
-        };
-        
-        ss_macro: ss_macro {
-            label = "sharp_s";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <10>;
-            tap-ms = <10>;
-            bindings = <&kp RA(S)>; // Alt+S for ß
+            bindings = <&kp LC(LS(U))>, <&kp E>, <&kp 4>, <&kp SPACE>;
         };
 
-        ae_cap_macro: ae_cap_macro {
-            label = "ae_cap_umlaut";
+        ae_cap: ae_umlaut_capatilized {
             compatible = "zmk,behavior-macro";
+            label = "IBUS_AE_CAP";
             #binding-cells = <0>;
-            wait-ms = <10>;
-            tap-ms = <10>;
-            bindings = <&kp RA(LS(A))>; // Alt+Shift+A for Ä
+            bindings = <&kp LC(LS(U))>, <&kp C>, <&kp 4>, <&kp SPACE>;
         };
-        
-        oe_cap_macro: oe_cap_macro {
-            label = "oe_cap_umlaut";
+
+        oe: oe_umlaut {
             compatible = "zmk,behavior-macro";
+            label = "IBUS_OE";
             #binding-cells = <0>;
-            wait-ms = <10>;
-            tap-ms = <10>;
-            bindings = <&kp RA(LS(O))>; // Alt+Shift+O for Ö
+            bindings = <&kp LC(LS(U))>, <&kp F>, <&kp 6>, <&kp SPACE>;
         };
-        
-        ue_cap_macro: ue_cap_macro {
-            label = "ue_cap_umlaut";
+
+        oe_cap: oe_umlaut_capatilized {
             compatible = "zmk,behavior-macro";
+            label = "IBUS_OE_CAP";
             #binding-cells = <0>;
-            wait-ms = <10>;
-            tap-ms = <10>;
-            bindings = <&kp RA(LS(U))>; // Alt+Shift+U for Ü
+            bindings = <&kp LC(LS(U))>, <&kp D>, <&kp 6>, <&kp SPACE>;
+        };
+
+        ue: ue_umlaut {
+            compatible = "zmk,behavior-macro";
+            label = "IBUS_UE";
+            #binding-cells = <0>;
+            bindings = <&kp LC(LS(U))>, <&kp F>, <&kp C>, <&kp SPACE>;
+        };
+
+        ue_cap: ue_umlaut_capatilized {
+            compatible = "zmk,behavior-macro";
+            label = "IBUS_UE_CAP";
+            #binding-cells = <0>;
+            bindings = <&kp LC(LS(U))>, <&kp D>, <&kp C>, <&kp SPACE>;
+        };
+
+        // Outputs capital if shift is held, lowercase otherwise
+        ae_mm: ae_mod_morph {
+            compatible = "zmk,behavior-mod-morph";
+            label = "AE_MOD_MORPH";
+            #binding-cells = <0>;
+            bindings = <&ae>, <&ae_cap>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        oe_mm: oe_mod_morph {
+            compatible = "zmk,behavior-mod-morph";
+            label = "OE_MOD_MORPH";
+            #binding-cells = <0>;
+            bindings = <&oe>, <&oe_cap>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        ue_mm: ue_mod_morph {
+            compatible = "zmk,behavior-mod-morph";
+            label = "UE_MOD_MORPH";
+            #binding-cells = <0>;
+            bindings = <&ue>, <&ue_cap>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
         };
     };
 
@@ -146,10 +135,10 @@
         base_layer {
             label = "Base";
             bindings = <
-                                     &kp Q        &kp W       &kp E         &kp R         &kp T                          &kp Y        &kp U          &kp I         &kp O       &kp P
-                                     &hm LGUI A   &hm LALT S  &hm LCTRL D   &hm LSHIFT F  &kp G                          &kp H        &hm RSHIFT J   &hm RCTRL K   &hm RALT L  &hm RGUI SEMICOLON
-            &esc_uml UMLAUTS ESCAPE  &kp Z        &kp X       &kp C         &kp V         &kp B                          &kp N        &kp M          &kp COMMA &kp DOT     &kp SLASH           &kp APOSTROPHE
-                                                              &lt NAV TAB   &lt NUM DEL   &lt SYM SPACE                  &lt SYM RET  &lt NUM BSPC   &lt NAV TAB
+                        &kp Q        &kp W       &kp E         &kp R         &kp T                          &kp Y        &kp U          &kp I         &kp O       &kp P
+                        &hm LGUI A   &hm LALT S  &hm LCTRL D   &hm LSHIFT F  &kp G                          &kp H        &hm RSHIFT J   &hm RCTRL K   &hm RALT L  &hm RGUI SEMICOLON
+            &esc_uml UMLAUTS ESCAPE  &kp Z  &kp X  &kp C       &kp V         &kp B                          &kp N        &kp M          &kp COMMA     &kp DOT     &kp SLASH           &kp APOSTROPHE
+                                                 &lt NAV TAB   &lt NUM DEL   &lt SYM SPACE                  &lt SYM RET  &lt NUM BSPC   &lt NAV TAB
             >;
         };
 
@@ -168,7 +157,7 @@
             bindings = <
                         &kp F1       &kp F2      &kp F3        &kp F4        &trans                         &trans       &kp PG_DN       &kp PG_UP    &trans          &trans
                         &hm LGUI F5  &hm LALT F6 &hm LCTRL F7  &hm LSHIFT F8 &trans                         &kp LEFT     &hm RSHIFT DOWN &hm RCTRL UP &hm RALT RIGHT  &kp RGUI
-            &trans      &kp F9       &kp F10     &kp F11       &kp F12       &trans                         &trans       &trans          &trans       &trans         &trans        &trans
+            &trans      &kp F9       &kp F10     &kp F11       &kp F12       &trans                         &trans       &trans          &trans       &trans          &trans        &trans
                                                  &lt NAV TAB   &lt NUM DEL   &lt SYM SPACE                  &lt SYM RET  &lt NUM BSPC   &lt NAV TAB 
             >;
         };
@@ -186,10 +175,10 @@
         umlauts_layer {
             label = "Umlauts";
             bindings = <
-                        &trans       &trans      &trans        &trans        &trans                         &trans       &ue_macro      &trans       &oe_macro   &trans
-                        &ae_macro    &ss_macro   &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans
-            &sft_umlcap LSHIFT MINUS &trans      &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans      &trans
-                                                 &lt NAV TAB   &lt NUM DEL   &lt SYM SPACE                  &lt SYM RET  &lt NUM BSPC   &lt NAV TAB 
+                        &trans           &trans      &trans        &trans        &trans                         &trans       &ue_mm         &trans       &oe_mm      &trans
+                        &ae_mm           &trans      &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans
+            &trans      &trans           &trans      &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans      &trans
+                                                     &lt NAV TAB   &lt NUM DEL   &lt SYM SPACE                  &lt SYM RET  &lt NUM BSPC   &lt NAV TAB 
             >;
         };
 
