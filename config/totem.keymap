@@ -61,20 +61,36 @@
             bindings = <&mo>, <&kp>;
         };
         
-        // Custom behavior for Shift/Umlauts caps
-        sft_umlcap: shift_umlauts_cap {
+        // Conditional umlaut - outputs capital if shift is held, lowercase otherwise
+        ae_cond: ae_conditional {
             compatible = "zmk,behavior-hold-tap";
-            label = "SFT_UMLCAP";
+            label = "AE_COND";
             #binding-cells = <2>;
             flavor = "tap-preferred";
-            tapping-term-ms = <200>;
-            quick-tap-ms = <125>;
-            global-quick-tap;
-            bindings = <&kp>, <&kp>;
+            tapping-term-ms = <0>;
+            bindings = <&ae_cap_macro>, <&ae_macro>;
+        };
+
+        oe_cond: oe_conditional {
+            compatible = "zmk,behavior-hold-tap";
+            label = "OE_COND";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <0>;
+            bindings = <&oe_cap_macro>, <&oe_macro>;
+        };
+
+        ue_cond: ue_conditional {
+            compatible = "zmk,behavior-hold-tap";
+            label = "UE_COND";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <0>;
+            bindings = <&ue_cap_macro>, <&ue_macro>;
         };
     };
 
-    // German Umlauts using Unicode (requires OS-level unicode input method)
+    // German Umlauts using Unicode with shift detection
     macros {
         ae_macro: ae_macro {
             label = "ae_umlaut";
@@ -82,7 +98,7 @@
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp RA(A)>; // Alt+A for ä (depends on OS layout)
+            bindings = <&macro_tap &kp U &kp N &kp I &kp C &kp O &kp D_E &kp 4 &kp 0&kp 0&kp D_4>;
         };
         
         oe_macro: oe_macro {
@@ -91,7 +107,7 @@
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp RA(O)>; // Alt+O for ö
+            bindings = <&macro_tap &kp U &kp N &kp I &kp C &kp O &kp D_D &kp 6 &kp F &kp 6>;
         };
         
         ue_macro: ue_macro {
@@ -100,7 +116,7 @@
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp RA(U)>; // Alt+U for ü
+            bindings = <&macro_tap &kp U &kp N &kp I &kp C &kp O &kp D_D &kp 6 &kp F &kp C>;
         };
         
         ss_macro: ss_macro {
@@ -109,7 +125,7 @@
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp RA(S)>; // Alt+S for ß
+            bindings = <&macro_tap &kp U &kp N &kp I &kp C &kp O &kp D_D &kp F &kp F &kp F &kp D_D>;
         };
 
         ae_cap_macro: ae_cap_macro {
@@ -118,7 +134,7 @@
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp RA(LS(A))>; // Alt+Shift+A for Ä
+            bindings = <&macro_tap &kp U &kp N &kp I &kp C &kp O &kp D_D &kp E &kp 4>;
         };
         
         oe_cap_macro: oe_cap_macro {
@@ -127,7 +143,7 @@
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp RA(LS(O))>; // Alt+Shift+O for Ö
+            bindings = <&macro_tap &kp U &kp N &kp I &kp C &kp O &kp D_D &kp 6 &kp D_D &kp 6>;
         };
         
         ue_cap_macro: ue_cap_macro {
@@ -136,7 +152,34 @@
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp RA(LS(U))>; // Alt+Shift+U for Ü
+            bindings = <&macro_tap &kp U &kp N &kp I &kp C &kp O &kp D_D &kp C &kp 4>;
+        };
+
+        ae_cond_macro: ae_cond_macro {
+            label = "ae_conditional";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&macro_tap &ae_macro>;
+        };
+        
+        oe_cond_macro: oe_cond_macro {
+            label = "oe_conditional";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&macro_tap &oe_macro>;
+        };
+        
+        ue_cond_macro: ue_cond_macro {
+            label = "ue_conditional";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&macro_tap &ue_macro>;
         };
     };
 
@@ -186,9 +229,9 @@
         umlauts_layer {
             label = "Umlauts";
             bindings = <
-                        &trans       &trans      &trans        &trans        &trans                         &trans       &ue_macro      &trans       &oe_macro   &trans
-                        &ae_macro    &ss_macro   &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans
-            &sft_umlcap LSHIFT MINUS &trans      &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans      &trans
+                        &trans           &trans      &trans        &trans        &trans                         &trans       &ue_cond LSHIFT 0  &trans       &oe_cond LSHIFT 0   &trans
+                        &ae_cond LSHIFT 0 &ss_macro   &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans
+            &trans      &trans           &trans      &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans      &trans
                                                  &lt NAV TAB   &lt NUM DEL   &lt SYM SPACE                  &lt SYM RET  &lt NUM BSPC   &lt NAV TAB 
             >;
         };
