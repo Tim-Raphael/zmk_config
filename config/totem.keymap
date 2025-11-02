@@ -65,42 +65,49 @@
             compatible = "zmk,behavior-macro";
             label = "IBUS_AE";
             #binding-cells = <0>;
-            bindings = <&kp LC(LS(U))>, <&kp E>, <&kp 4>, <&kp SPACE>;
+            bindings = <&kp LC(LS(U))>, <&kp 0>, <&kp 0>, <&kp E>, <&kp 4>, <&kp SPACE>;
         };
 
-        ae_cap: ae_umlaut_capatilized {
+        ae_cap: ae_umlaut_capitalized {
             compatible = "zmk,behavior-macro";
             label = "IBUS_AE_CAP";
             #binding-cells = <0>;
-            bindings = <&kp LC(LS(U))>, <&kp C>, <&kp 4>, <&kp SPACE>;
+            bindings = <&kp LC(LS(U))>, <&kp 0>, <&kp 0>, <&kp C>, <&kp 4>, <&kp SPACE>;
         };
 
         oe: oe_umlaut {
             compatible = "zmk,behavior-macro";
             label = "IBUS_OE";
             #binding-cells = <0>;
-            bindings = <&kp LC(LS(U))>, <&kp F>, <&kp 6>, <&kp SPACE>;
+            bindings = <&kp LC(LS(U))>, <&kp 0>, <&kp 0>, <&kp F>, <&kp 6>, <&kp SPACE>;
         };
 
-        oe_cap: oe_umlaut_capatilized {
+        oe_cap: oe_umlaut_capitalized {
             compatible = "zmk,behavior-macro";
             label = "IBUS_OE_CAP";
             #binding-cells = <0>;
-            bindings = <&kp LC(LS(U))>, <&kp D>, <&kp 6>, <&kp SPACE>;
+            bindings = <&kp LC(LS(U))>, <&kp 0>, <&kp 0>, <&kp D>, <&kp 6>, <&kp SPACE>;
         };
 
         ue: ue_umlaut {
             compatible = "zmk,behavior-macro";
             label = "IBUS_UE";
             #binding-cells = <0>;
-            bindings = <&kp LC(LS(U))>, <&kp F>, <&kp C>, <&kp SPACE>;
+            bindings = <&kp LC(LS(U))>, <&kp 0>, <&kp 0>, <&kp F>, <&kp C>, <&kp SPACE>;
         };
 
-        ue_cap: ue_umlaut_capatilized {
+        ue_cap: ue_umlaut_capitalized {
             compatible = "zmk,behavior-macro";
             label = "IBUS_UE_CAP";
             #binding-cells = <0>;
-            bindings = <&kp LC(LS(U))>, <&kp D>, <&kp C>, <&kp SPACE>;
+            bindings = <&kp LC(LS(U))>, <&kp 0>, <&kp 0>, <&kp D>, <&kp C>, <&kp SPACE>;
+        };
+
+        sz: sz_umlaut {
+            compatible = "zmk,behavior-macro";
+            label = "IBUS_SZ";
+            #binding-cells = <0>;
+            bindings = <&kp LC(LS(U))>, <&kp 0>, <&kp 0>, <&kp D>, <&kp F>, <&kp SPACE>;
         };
 
         // Outputs capital if shift is held, lowercase otherwise
@@ -158,7 +165,7 @@
                         &kp F1       &kp F2      &kp F3        &kp F4        &trans                         &trans       &kp PG_DN       &kp PG_UP    &trans          &trans
                         &hm LGUI F5  &hm LALT F6 &hm LCTRL F7  &hm LSHIFT F8 &trans                         &kp LEFT     &hm RSHIFT DOWN &hm RCTRL UP &hm RALT RIGHT  &kp RGUI
             &trans      &kp F9       &kp F10     &kp F11       &kp F12       &trans                         &trans       &trans          &trans       &trans          &trans        &trans
-                                                 &lt NAV TAB   &lt NUM DEL   &lt SYM SPACE                  &lt SYM RET  &lt NUM BSPC   &lt NAV TAB 
+                                                 &lt NAV TAB   &lt NUM DEL   &lt SYM SPACE                  &lt SYM RET  &lt NUM BSPC    &lt NAV TAB 
             >;
         };
 
@@ -176,7 +183,7 @@
             label = "Umlauts";
             bindings = <
                         &trans           &trans      &trans        &trans        &trans                         &trans       &ue_mm         &trans       &oe_mm      &trans
-                        &ae_mm           &trans      &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans
+                        &ae_mm           &sz_mm      &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans
             &trans      &trans           &trans      &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans      &trans
                                                      &lt NAV TAB   &lt NUM DEL   &lt SYM SPACE                  &lt SYM RET  &lt NUM BSPC   &lt NAV TAB 
             >;
