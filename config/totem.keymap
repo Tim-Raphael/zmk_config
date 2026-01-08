@@ -20,122 +20,23 @@
 #define SYM         1
 #define NAV         2  
 #define NUM         3
-#define UMLAUTS     4
-#define UTIL        5
+#define GAME        4 
+#define UTIL        5 
 
 &mt {
-    quick-tap-ms = <100>;
-    global-quick-tap;
-    flavor = "tap-preferred";
     tapping-term-ms = <180>;
+    quick-tap-ms = <125>;
+    global-quick-tap;
+    flavor = "balanced";
 };
 
 &lt {
-    tapping-term-ms = <200>;
+    quick-tap-ms = <180>;
+    tapping-term-ms = <125>;
     flavor = "balanced";
-    quick-tap-ms = <150>;
 };
 
 / {
-    behaviors {
-        hm: homerow_mods {
-            compatible = "zmk,behavior-hold-tap";
-            label = "HOMEROW_MODS";
-            #binding-cells = <2>;
-            flavor = "tap-preferred";
-            tapping-term-ms = <200>;
-            quick-tap-ms = <125>;
-            global-quick-tap;
-            bindings = <&kp>, <&kp>;
-        };
-        
-        // Custom behavior for Escape/Umlauts layer
-        esc_uml: escape_umlauts {
-            compatible = "zmk,behavior-hold-tap";
-            label = "ESC_UMLAUTS";
-            #binding-cells = <2>;
-            flavor = "tap-preferred";
-            tapping-term-ms = <200>;
-            quick-tap-ms = <125>;
-            global-quick-tap;
-            bindings = <&mo>, <&kp>;
-        };
-        
-        ae: ae_umlaut {
-            compatible = "zmk,behavior-macro";
-            label = "IBUS_AE";
-            #binding-cells = <0>;
-            bindings = <&kp LC(LS(U))>, <&kp 0>, <&kp 0>, <&kp E>, <&kp 4>, <&kp SPACE>;
-        };
-
-        ae_cap: ae_umlaut_capitalized {
-            compatible = "zmk,behavior-macro";
-            label = "IBUS_AE_CAP";
-            #binding-cells = <0>;
-            bindings = <&kp LC(LS(U))>, <&kp 0>, <&kp 0>, <&kp C>, <&kp 4>, <&kp SPACE>;
-        };
-
-        oe: oe_umlaut {
-            compatible = "zmk,behavior-macro";
-            label = "IBUS_OE";
-            #binding-cells = <0>;
-            bindings = <&kp LC(LS(U))>, <&kp 0>, <&kp 0>, <&kp F>, <&kp 6>, <&kp SPACE>;
-        };
-
-        oe_cap: oe_umlaut_capitalized {
-            compatible = "zmk,behavior-macro";
-            label = "IBUS_OE_CAP";
-            #binding-cells = <0>;
-            bindings = <&kp LC(LS(U))>, <&kp 0>, <&kp 0>, <&kp D>, <&kp 6>, <&kp SPACE>;
-        };
-
-        ue: ue_umlaut {
-            compatible = "zmk,behavior-macro";
-            label = "IBUS_UE";
-            #binding-cells = <0>;
-            bindings = <&kp LC(LS(U))>, <&kp 0>, <&kp 0>, <&kp F>, <&kp C>, <&kp SPACE>;
-        };
-
-        ue_cap: ue_umlaut_capitalized {
-            compatible = "zmk,behavior-macro";
-            label = "IBUS_UE_CAP";
-            #binding-cells = <0>;
-            bindings = <&kp LC(LS(U))>, <&kp 0>, <&kp 0>, <&kp D>, <&kp C>, <&kp SPACE>;
-        };
-
-        sz: sz_umlaut {
-            compatible = "zmk,behavior-macro";
-            label = "IBUS_SZ";
-            #binding-cells = <0>;
-            bindings = <&kp LC(LS(U))>, <&kp 0>, <&kp 0>, <&kp D>, <&kp F>, <&kp SPACE>;
-        };
-
-        // Outputs capital if shift is held, lowercase otherwise
-        ae_mm: ae_mod_morph {
-            compatible = "zmk,behavior-mod-morph";
-            label = "AE_MOD_MORPH";
-            #binding-cells = <0>;
-            bindings = <&ae>, <&ae_cap>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        oe_mm: oe_mod_morph {
-            compatible = "zmk,behavior-mod-morph";
-            label = "OE_MOD_MORPH";
-            #binding-cells = <0>;
-            bindings = <&oe>, <&oe_cap>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        ue_mm: ue_mod_morph {
-            compatible = "zmk,behavior-mod-morph";
-            label = "UE_MOD_MORPH";
-            #binding-cells = <0>;
-            bindings = <&ue>, <&ue_cap>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-    };
-
     keymap {
         compatible = "zmk,keymap";
 
@@ -143,8 +44,8 @@
             label = "Base";
             bindings = <
                         &kp Q        &kp W       &kp E         &kp R         &kp T                          &kp Y        &kp U          &kp I         &kp O       &kp P
-                        &hm LGUI A   &hm LALT S  &hm LCTRL D   &hm LSHIFT F  &kp G                          &kp H        &hm RSHIFT J   &hm RCTRL K   &hm RALT L  &hm RGUI SEMICOLON
-            &esc_uml UMLAUTS ESCAPE  &kp Z  &kp X  &kp C       &kp V         &kp B                          &kp N        &kp M          &kp COMMA     &kp DOT     &kp SLASH           &caps_word
+                        &mt LGUI A   &mt LALT S  &mt LCTRL D   &mt LSHIFT F  &kp G                          &kp H        &mt RSHIFT J   &mt RCTRL K   &mt RALT L  &mt RGUI SEMICOLON
+            &kp ESC     &kp Z        &kp X       &kp C         &kp V         &kp B                          &kp N        &kp M          &kp COMMA     &kp DOT     &kp SLASH           &caps_word
                                                  &lt NAV TAB   &lt NUM DEL   &lt SYM SPACE                  &lt SYM RET  &lt NUM BSPC   &lt NAV TAB
             >;
         };
@@ -155,7 +56,7 @@
                         &kp EXCL     &kp AT      &kp HASH      &kp DOLLAR    &kp PERCENT                    &kp CARET    &kp AMPERSAND  &kp ASTERISK &kp DQT     &kp APOSTROPHE
                         &kp LT       &kp LBRC    &kp LPAR      &kp LBKT      &kp PIPE                       &kp UNDER    &kp RBKT       &kp RPAR     &kp RBRC    &kp GT
             &trans      &kp GRAVE    &kp TILDE   &kp BACKSLASH &trans        &trans                         &kp MINUS    &kp PLUS       &kp ASTERISK &trans      &kp EQUAL      &trans
-                                                 &lt NAV TAB   &lt NUM DEL   &lt SYM SPACE                  &lt SYM RET  &lt NUM BSPC   &lt NAV TAB
+                                                 &trans        &trans        &trans                         &trans       &trans         &trans
             >;
         };
 
@@ -163,9 +64,9 @@
             label = "Navigation";
             bindings = <
                         &kp F1       &kp F2      &kp F3        &kp F4        &trans                         &trans       &kp PG_DN       &kp PG_UP    &trans          &trans
-                        &hm LGUI F5  &hm LALT F6 &hm LCTRL F7  &hm LSHIFT F8 &trans                         &kp LEFT     &hm RSHIFT DOWN &hm RCTRL UP &hm RALT RIGHT  &kp RGUI
-            &trans      &kp F9       &kp F10     &kp F11       &kp F12       &trans                         &trans       &trans          &trans       &trans          &trans        &trans
-                                                 &lt NAV TAB   &lt NUM DEL   &lt SYM SPACE                  &lt SYM RET  &lt NUM BSPC    &lt NAV TAB 
+                        &mt LGUI F5  &mt LALT F6 &mt LCTRL F7  &mt LSHIFT F8 &trans                         &kp LEFT     &mt RSHIFT DOWN &mt RCTRL UP &mt RALT RIGHT  &kp RGUI
+            &trans      &kp F9       &kp F10     &kp F11       &kp F12       &trans                         &trans       &trans          &trans       &trans          &trans    &trans
+                                                 &trans        &trans        &trans                         &trans       &trans          &trans
             >;
         };
 
@@ -173,19 +74,20 @@
             label = "Numbers";
             bindings = <
                         &trans       &trans      &trans        &trans        &trans                         &kp ASTERISK &kp N7         &kp N8       &kp N9      &kp SLASH 
-                        &trans       &trans      &trans        &trans        &trans                         &kp PLUS     &hm RSHIFT N4  &hm RCTRL N5 &hm RALT N6 &hm RGUI N0
-            &trans      &trans       &trans      &trans        &trans        &trans                         &kp MINUS    &kp N1         &kp N2       &kp N3      &kp EQUAL     &trans
-                                                 &lt NAV TAB   &lt NUM DEL   &lt SYM SPACE                  &lt SYM RET  &lt NUM BSPC   &lt NAV TAB 
+                        &trans       &trans      &trans        &trans        &trans                         &kp PLUS     &mt RSHIFT N4  &mt RCTRL N5 &mt RALT N6 &mt RGUI N0
+            &trans      &trans       &trans      &trans        &trans        &trans                         &kp MINUS    &kp N1         &kp N2       &kp N3      &kp EQUAL    &trans
+                                                 &trans        &trans        &trans                         &trans       &trans         &trans
             >;
         };
 
-        umlauts_layer {
-            label = "Umlauts";
+        // TODO:
+        game_layer {
+            label = "Game";
             bindings = <
-                        &trans           &trans      &trans        &trans        &trans                     &trans       &ue_mm         &trans       &oe_mm      &trans
-                        &ae_mm           &sz         &trans        &trans        &trans                     &trans       &trans         &trans       &trans      &trans
-            &trans      &trans           &trans      &trans        &trans        &trans                     &trans       &trans         &trans       &trans      &trans      &trans
-                                                     &lt NAV TAB   &lt NUM DEL   &lt SYM SPACE              &lt SYM RET  &lt NUM BSPC   &lt NAV TAB 
+                        &trans       &trans      &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans
+                        &trans       &trans      &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans
+            &trans      &trans       &trans      &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans      &trans
+                                                 &trans        &trans        &trans                         &trans       &trans         &trans
             >;
         };
 
@@ -195,7 +97,7 @@
                         &bt BT_CLR   &bootloader &trans        &trans        &trans                         &trans       &trans         &trans       &bootloader &trans
                         &trans       &trans      &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans
             &trans      &trans       &trans      &trans        &trans        &trans                         &trans       &trans         &trans       &trans      &trans      &trans
-                                                 &lt NAV TAB   &lt NUM DEL   &lt SYM SPACE                  &lt SYM RET  &lt NUM BSPC   &lt NAV TAB 
+                                                 &trans        &trans        &trans                         &trans       &trans         &trans
             >;
         };
     };
