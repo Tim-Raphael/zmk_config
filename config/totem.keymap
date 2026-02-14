@@ -104,20 +104,20 @@
         symbol_layer {
             label = "Symbols";
             bindings = <
-                        &kp EXCL     &kp AT      &kp HASH      &kp DOLLAR    &kp PERCENT                    &kp CARET    &kp AMPERSAND  &kp ASTERISK &kp DQT     &kp APOSTROPHE
-                        &kp LT       &kp LBRC    &kp LPAR      &kp LBKT      &kp PIPE                       &kp UNDER    &kp RBKT       &kp RPAR     &kp RBRC    &kp GT
-            &trans      &kp GRAVE    &kp TILDE   &kp BACKSLASH &trans        &trans                         &kp MINUS    &kp PLUS       &kp ASTERISK &trans      &kp EQUAL      &trans
-                                                 &trans        &trans        &trans                         &trans       &trans         &trans
+                        &kp EXCL          &kp AT             &kp HASH             &kp DOLLAR             &kp PERCENT                    &kp CARET    &kp AMPERSAND          &kp ASTERISK         &kp DQT            &kp APOSTROPHE
+                        &hm_meta LGUI LT  &hm_alt LALT LBRC  &hm_ctrl LCTRL LPAR  &hm_shift LSHIFT LBKT  &kp PIPE                       &kp UNDER    &hm_shift RSHIFT RBKT  &hm_ctrl RCTRL RPAR  &hm_alt RALT RBRC  &hm_meta RGUI GT
+            &trans      &kp GRAVE         &kp TILDE          &kp BACKSLASH        &trans                 &trans                         &kp MINUS    &kp PLUS               &kp ASTERISK         &trans             &kp EQUAL         &trans
+                                                             &trans               &trans                 &trans                         &trans       &trans                 &trans
             >;
         };
 
         nav_layer {
             label = "Navigation";
             bindings = <
-                        &kp F1       &kp F2      &kp F3        &kp F4        &trans                         &trans       &kp PG_DN       &kp PG_UP    &trans          &trans
-                        &kp F5       &kp F6      &kp F7        &kp F8        &trans                         &kp LEFT     &kp DOWN        &kp UP       &kp RIGHT       &trans
-            &trans      &kp F9       &kp F10     &kp F11       &kp F12       &trans                         &trans       &trans          &trans       &trans          &trans    &trans
-                                                 &trans        &trans        &trans                         &trans       &trans          &trans
+                        &kp F1            &kp F2           &kp F3             &kp F4               &trans                         &trans       &kp PG_DN              &kp PG_UP          &trans              &trans
+                        &hm_meta LGUI F5  &hm_alt LALT F6  &hm_ctrl LCTRL F7  &hm_shift LSHIFT F8  &trans                         &kp LEFT     &hm_shift RSHIFT DOWN  &hm_ctrl RCTRL UP  &hm_alt RALT RIGHT  &trans
+            &trans      &kp F9            &kp F10          &kp F11            &kp F12              &trans                         &trans       &trans                 &trans             &trans              &trans    &trans
+                                                           &trans             &trans               &trans                         &trans       &trans                 &trans
             >;
         };
 
